@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Una Playlist Bragada: música regional mexicana, artistas y canciones favoritas.">
+    <title>Una Playlist Bragada | Música</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <style>
+        /* ===== COLORES Y ESTILOS GENERALES ===== */
+        :root {
+            --negro: #101010;
+            --negro-card: #1b1b1b;
+            --rojo: #e50925;
+            --rojo-claro: #ff334d;
+            --blanco: #ffffff;
+            --gris: #bdbdbd;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 85px;
+        }
+
+        body {
+            margin: 0;
+            background: var(--negro);
+            color: var(--blanco);
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        /* ===== BARRA DE NAVEGACIÓN ===== */
+        .navbar {
+            background: rgba(12, 12, 12, 0.97);
+            border-bottom: 2px solid var(--rojo);
+        }
+
+        .navbar-brand {
+            color: var(--blanco) !important;
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
+
+        .marca-roja {
+            color: var(--rojo);
+        }
+
+        .navbar .nav-link {
+            color: #eeeeee;
+            margin-left: 12px;
+            transition: color 0.25s;
+        }
+
+        .navbar .nav-link:hover,
+        .navbar .nav-link:focus {
+            color: var(--rojo-claro);
+        }
+
+        .navbar-toggler {
+            border-color: var(--rojo);
+        }
+
+        .navbar-toggler-icon {
+            filter: invert(1);
+        }
+
+        /* ===== PORTADA PRINCIPAL ===== */
+        .hero {
+            min-height: 570px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 100px 20px 80px;
+
+            background:
+                linear-gradient(
+                    rgba(0, 0, 0, 0.68),
+                    rgba(12, 0, 0, 0.90)
+                ),
+                url("https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=1800&q=85");
+
+            background-size: cover;
+            background-position: center;
+            border-bottom: 4px solid var(--rojo);
+        }
+
+        .hero-contenido {
+            max-width: 900px;
+        }
+
+        .hero-etiqueta {
+            color: var(--rojo-claro);
+            letter-spacing: 5px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .hero h1 {
+            margin: 20px 0;
+            font-size: clamp(42px, 8vw, 88px);
+            line-height: 1;
+            font-weight: 1000;
+            text-transform: uppercase;
+            text-shadow: 0 5px 25px rgba(229, 9, 37, 0.5);
+        }
+
+        .hero h1 span {
+            display: block;
+            color: var(--rojo);
+        }
+
+        .hero p {
+            color: #e0e0e0;
+            font-size: 18px;
+            max-width: 650px;
+            margin: 25px auto;
+        }
+
+        .btn-rojo {
+            display: inline-block;
+            background: var(--rojo);
+            color: white;
+            padding: 13px 26px;
+            border: 1px solid var(--rojo);
+            border-radius: 6px;
+            font-weight: bold;
+            transition: 0.25s;
+        }
+
+        .btn-rojo:hover {
+            color: white;
+            background: #b8001b;
+            border-color: #b8001b;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline-red {
+            display: inline-block;
+            color: white;
+            border: 1px solid var(--rojo);
+            padding: 10px 18px;
+            border-radius: 5px;
+            transition: 0.25s;
+        }
+
+        .btn-outline-red:hover {
+            background: var(--rojo);
+            color: white;
+        }
+
+        /* ===== SECCIONES ===== */
+        .seccion {
+            padding: 75px 0;
+        }
+
+        .titulo-seccion {
+            font-size: clamp(27px, 4vw, 40px);
+            text-transform: uppercase;
+            font-weight: 900;
+            margin-bottom: 12px;
+        }
+
+        .titulo-seccion span {
+            color: var(--rojo);
+        }
+
+        .subtitulo {
+            color: var(--gris);
+            margin-bottom: 32px;
+        }
+
+        .linea-roja {
+            width: 75px;
+            height: 4px;
+            background: var(--rojo);
+            margin: 18px 0 25px;
+        }
+
+        /* ===== PRESENTACIÓN ===== */
+        .presentacion {
+            background: #151515;
+        }
+
+        .presentacion-caja {
+            padding: 30px;
+            border-left: 4px solid var(--rojo);
+            background: #202020;
+            border-radius: 5px;
+        }
+
+        .presentacion-caja p {
+            color: #dddddd;
+            margin-bottom: 0;
+            line-height: 1.9;
+        }
+
+        /* ===== BÚSQUEDA DE ARTISTAS ===== */
+        .buscador {
+            background: #202020;
+            border: 1px solid #393939;
+            color: white;
+            border-radius: 7px;
+            padding: 13px 15px;
+        }
+
+        .buscador::placeholder {
+            color: #aaaaaa;
+        }
+
+        .buscador:focus {
+            background: #202020;
+            color: white;
+            border-color: var(--rojo);
+            box-shadow: 0 0 0 0.2rem rgba(229, 9, 37, 0.18);
+        }
+
+        /* ===== TARJETAS DE ARTISTAS ===== */
+        .artist-card {
+            height: 100%;
+            overflow: hidden;
+            background: var(--negro-card);
+            border: 1px solid #333333;
+            border-radius: 10px;
+            transition: transform 0.25s, border-color 0.25s;
+        }
+
+        .artist-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--rojo);
+        }
+
+        .artist-photo {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            display: block;
+            background: #292929;
+            border-bottom: 3px solid var(--rojo);
+        }
+
+        .artist-card .card-body {
+            padding: 20px;
+        }
+
+        .artist-card h3 {
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .artist-card .card-text {
+            color: #aaaaaa;
+            font-size: 13px;
+        }
+
+        .cantidad-canciones {
+            color: #ff687a;
+            font-size: 12px;
+            margin-bottom: 14px;
+        }
+
+        .lista-canciones {
+            list-style: none;
+            padding: 0;
+            margin: 15px 0;
+        }
+
+        .lista-canciones li {
+            border-bottom: 1px solid #343434;
+            padding: 9px 0;
+        }
+
+        .lista-canciones li:last-child {
+            border-bottom: 0;
+        }
+
+        .enlace-cancion {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            color: #eeeeee;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .enlace-cancion:hover,
+        .enlace-cancion:focus {
+            color: #ff5369;
+        }
+
+        .play-icon {
+            color: var(--rojo);
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .btn-ver-mas {
+            width: 100%;
+            background: #2b2b2b;
+            color: white;
+            border: 1px solid #444;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .btn-ver-mas:hover {
+            background: var(--rojo);
+            color: white;
+            border-color: var(--rojo);
+        }
+
+        /* ===== CANCIONES FAVORITAS ===== */
+        .favoritas {
+            background: #151515;
+        }
+
+        .favorita-item {
+            background: #222222;
+            border: 1px solid #383838;
+            border-left: 4px solid var(--rojo);
+            padding: 18px;
+            border-radius: 6px;
+            height: 100%;
+        }
+
+        .favorita-item h3 {
+            font-size: 17px;
+            margin-bottom: 7px;
+        }
+
+        .favorita-item p {
+            color: #bdbdbd;
+            font-size: 13px;
+            margin-bottom: 12px;
+        }
+
+        /* ===== CONTACTO ===== */
+        .contacto-caja {
+            background: linear-gradient(135deg, #202020, #141414);
+            border: 1px solid #3b3b3b;
+            border-top: 4px solid var(--rojo);
+            border-radius: 10px;
+            padding: 30px;
+        }
+
+        .contacto-caja p {
+            color: #d0d0d0;
+        }
+
+        /* ===== PIE DE PÁGINA ===== */
+        footer {
+            padding: 30px 15px;
+            background: #080808;
+            border-top: 2px solid var(--rojo);
+            color: #a9a9a9;
+            text-align: center;
+            font-size: 13px;
+        }
+
+        footer strong {
+            color: white;
+        }
+
+        /* ===== MÓVILES ===== */
+        @media (max-width: 576px) {
+            .hero {
+                min-height: 480px;
+                padding: 80px 18px 60px;
+            }
+
+            .hero-etiqueta {
+                letter-spacing: 2px;
+            }
+
+            .seccion {
+                padding: 52px 0;
+            }
+
+            .artist-photo {
+                height: 200px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            *,
+            *::before,
+            *::after {
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ===== NAVEGACIÓN ===== -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#inicio">
+                <span class="marca-roja">♫</span>
+                UNA PLAYLIST BRAGADA
+            </a>
+
+            <button class="navbar-toggler" type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#menuPrincipal"
+                    aria-controls="menuPrincipal"
+                    aria-expanded="false"
+                    aria-label="Abrir o cerrar menú">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="menuPrincipal">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#inicio">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#artistas">Artistas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#favoritas">Canciones favoritas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contacto">Contacto</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== PORTADA CON TÍTULO GRANDE ===== -->
+    <header id="inicio" class="hero">
+        <div class="hero-contenido">
+            <div class="hero-etiqueta">
+                MÚSICA REGIONAL MEXICANA
+            </div>
+
+            <h1>
+                UNA PLAYLIST
+                <span>BRAGADA</span>
+            </h1>
+
+            <p>
+                Tus artistas favoritos, tus canciones y el sonido
+                que le pone ambiente a cada momento.
+                Encuentra tu canción y escúchala en YouTube.
+            </p>
+
+            <a href="#artistas" class="btn-rojo">
+                ♫ EXPLORAR PLAYLIST
+            </a>
+        </div>
+    </header>
+
+    <!-- ===== PRESENTACIÓN ===== -->
+    <section class="presentacion seccion">
+        <div class="container">
+            <div class="presentacion-caja">
+                <h2 class="titulo-seccion">
+                    El sonido de <span>nuestra playlist</span>
+                </h2>
+
+                <div class="linea-roja"></div>
+
+                <p>
+                    Bienvenido a Una Playlist Bragada, un espacio
+                    dedicado a reunir canciones de tus artistas
+                    favoritos del regional mexicano. Explora las
+                    listas, encuentra tus temas preferidos y pulsa
+                    cualquier canción para buscarla en YouTube.
+                    ¡Que no pare la música!
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ARTISTAS Y TARJETAS ===== -->
+    <section id="artistas" class="seccion">
+        <div class="container">
+            <h2 class="titulo-seccion">
+                Nuestros <span>artistas</span>
+            </h2>
+
+            <p class="subtitulo">
+                Explora cada tarjeta y presiona una canción para
+                encontrarla en YouTube.
+            </p>
+
+            <div class="row mb-4">
+                <div class="col-md-8 col-lg-6">
+                    <label for="buscarArtista" class="form-label">
+                        Buscar artista o canción
+                    </label>
+
+                    <input
+                        type="search"
+                        id="buscarArtista"
+                        class="form-control buscador"
+                        placeholder="Escribe un artista o una canción..."
+                        autocomplete="off">
+                </div>
+            </div>
+
+            <div class="row g-4" id="contenedorArtistas">
+                <!-- Las tarjetas se generan con JavaScript -->
+            </div>
+
+            <p id="sinResultados" class="text-center mt-4"
+               hidden>
+                No se encontraron coincidencias. Prueba con otro nombre.
+            </p>
+        </div>
+    </section>
+
+    <!-- ===== CANCIONES FAVORITAS ===== -->
+    <section id="favoritas" class="favoritas seccion">
+        <div class="container">
+            <h2 class="titulo-seccion">
+                Canciones <span>favoritas</span>
+            </h2>
+
+            <p class="subtitulo">
+                Una selección destacada. Puedes cambiarla por tus
+                canciones preferidas.
+            </p>
+
+            <div class="row g-3" id="listaFavoritas"></div>
+        </div>
+    </section>
+
+    <!-- ===== CONTACTO ===== -->
+    <section id="contacto" class="seccion">
+        <div class="container">
+            <div class="contacto-caja text-center">
+                <h2 class="titulo-seccion">
+                    <span>Contacto</span>
+                </h2>
+
+                <p>
+                    Este sitio fue creado como un proyecto escolar
+                    de portafolio musical.
+                </p>
+
+                <p>
+                    ¿Tienes sugerencias para agregar más canciones?
+                    Puedes personalizar esta sección con tu nombre
+                    y correo escolar.
+                </p>
+
+                <p class="mb-0">
+                    <strong>Autor/a:</strong> Escribe tu nombre aquí
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== PIE DE PÁGINA ===== -->
+    <footer>
+        <p>
+            <strong>UNA PLAYLIST BRAGADA</strong>
+            · Proyecto escolar de HTML, CSS y Bootstrap
+        </p>
+        <p class="mb-0">
+            ©️ 2026 · Sitio de fans. Las canciones pertenecen
+            a sus respectivos artistas y titulares.
+        </p>
+    </footer>
+
+    <!-- ===== BOOTSTRAP ===== -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        /* =====================================================
+           LISTA DE ARTISTAS Y CANCIONES
+           Las imágenes se guardan en la carpeta imagenes.
+           ===================================================== */
+
+        const artistas = [
+            {
+                nombre: "Los Alegres del Barranco",
+                imagen: "imagenes/alegres-del-barranco.jpg",
+                canciones: [
+                    "La muerte del comandante",
+                    "El desconocido",
+                    "El de la presa",
+                    "Te mega amo",
+                    "Flor hermosa",
+                    "El del palenque",
+                    "El doble R",
+                    "Qué propones",
+                    "En estos tiempos"
+                ]
+            },
+            {
+                nombre: "Edición Especial",
+                imagen: "imagenes/edicion-especial.jpg",
+                canciones: [
+                    "Si es posible",
+                    "Sin pagar renta",
+                    "Buena suerte",
+                    "El Poncho 43",
+                    "Cada noche",
+                    "Buena suerte",
+                    "Todo cambió",
+                    "Culpables",
+                    "Imaginándote",
+                    "Hoy me voy"
+                ]
+            },
+            {
+                nombre: "Los Canelos Jr's",
+                imagen: "imagenes/los-canelos-jrs.jpg",
+                canciones: [
+                    "Coleccionando heridas",
+                    "Casi siempre estoy pensando en ti",
+                    "Como tú querer",
+                    "Como te va mi amor",
+                    "Ojitos de capulín",
+                    "Como tu querer",
+                    "Labios rojos"
+                ]
+            },
+            {
+                nombre: "Los Tucanes de Tijuana",
+                imagen: "imagenes/tucanes-de-tijuana.jpg",
+                canciones: [
+                    "Tres pies boca abajo",
+                    "El águila blanca",
+                    "Soy todo tuyo",
+                    "Mis tres viejas",
+                    "Amor platónico",
+                    "Tus verdades",
+                    "La piñata",
+                    "Fiesta en la sierra"
+                ]
+            },
+            {
+                nombre: "Marca MP",
+                imagen: "imagenes/marca-mp.jpg",
+                canciones: [
+                    "Ven conmigo",
+                    "Qué fue lo que pasó",
+                    "Recuerda",
+                    "Ya acabó",
+                    "Tu todo cambió"
+                ]
+            },
+            {
+                nombre: "Herencia de Grandes",
+                imagen: "imagenes/herencia-de-grandes.jpg",
+                canciones: [
+                    "Migajero",
+                    "Dos minutos",
+                    "Yo y la luna",
+                    "No regreses",
+                    "Cómo duele el amor",
+                    "Fotografía",
+                    "Imaginándote",
+                    "Amor de antes",
+                    "Quiéreme como te quiero"
+                ]
+            },
+            {
+                nombre: "Efecto Elegante",
+                imagen: "imagenes/efecto-elegante.jpg",
+                canciones: [
+                    "Nadie como ella",
+                    "M de amor",
+                    "Préstame tu corazón",
+                    "Ebrio de amor",
+                    "Querido amor"
+                ]
+            },
+            {
+                nombre: "Plantel Bélico",
+                imagen: "imagenes/plantel-belico.jpg",
+                canciones: [
+                    "Martes trece",
+                    "Colombiana",
+                    "Sin maquillaje",
+                    "Te veo a las 10",
+                    "Sedó la palabra"
+                ]
+            },
+            {
+                nombre: "Ariel Camacho",
+                imagen: "imagenes/ariel-camacho.jpg",
+                canciones: [
+                    "El karma",
+                    "Mis quimeras",
+                    "Que se canse de llamar",
+                    "Por qué te vas de mí",
+                    "Por enamorarme",
+                    "Hablemos como fue"
+                ]
+            },
+            {
+                nombre: "Vagón Chicano",
+                imagen: "imagenes/vagon-chicano.jpg",
+                canciones: [
+                    "Clavado en un bar",
+                    "Necesidad",
+                    "Yo sí me enamoré",
+                    "La moneda",
+                    "Viernes sin tu amor",
+                    "Si yo fuera él"
+                ]
+            },
+            {
+                nombre: "Marca Registrada",
+                imagen: "imagenes/marca-registrada.jpg",
+                canciones: [
+                    "Eres mi crush",
+                    "Migajero",
+                    "El comerciante",
+                    "La güerita"
+                ]
+            },
+            {
+                nombre: "Alfredito Olivas",
+                imagen: "imagenes/alfredito-olivas.jpg",
+                canciones: [
+                    "Con la novedad",
+                    "En definitiva",
+                    "El precio de la soledad",
+                    "Tus lágrimas",
+                    "Y por qué no"
+                ]
+            },
+            {
+                nombre: "Fuerza Regida",
+                imagen: "imagenes/fuerza-regida.jpg",
+                canciones: [
+                    "Caperuza",
+                    "Brilla rosa",
+                    "Peliculiano",
+                    "Ansiedad",
+                    "Tóxicos",
+                    "Tu sancho nel"
+                ]
+            }
+        ];
+
+        /* ===== CREAR ENLACE A YOUTUBE ===== */
+        function enlaceYouTube(artista, cancion) {
+            const busqueda = artista + " " + cancion;
+            return "https://www.youtube.com/results?search_query="
+                + encodeURIComponent(busqueda);
+        }
+
+        /* ===== CREAR TARJETAS ===== */
+        const contenedor = document.getElementById(
+            "contenedorArtistas"
+        );
+
+        const sinResultados = document.getElementById(
+            "sinResultados"
+        );
+
+        function crearTarjetas(lista) {
+            contenedor.replaceChildren();
+
+            lista.forEach((artista, indice) => {
+                const columna = document.createElement("div");
+                columna.className = "col-12 col-md-6 col-xl-4";
+
+                const tarjeta = document.createElement("article");
+                tarjeta.className = "card artist-card";
+
+                const imagen = document.createElement("img");
+                imagen.className = "artist-photo";
+                imagen.src = artista.imagen;
+                imagen.alt = "Fotografía de " + artista.nombre;
+                imagen.loading = "lazy";
+
+                /* Si la foto no existe, muestra una imagen
+                   neutra identificada con el nombre del artista. */
+                imagen.onerror = function () {
+                    this.onerror = null;
+                    this.src =
+                        "https://placehold.co/700x400/1b1b1b/ffffff?text="
+                        + encodeURIComponent(artista.nombre);
+                };
+
+                const cuerpo = document.createElement("div");
+                cuerpo.className = "card-body";
+
+                const titulo = document.createElement("h3");
+                titulo.textContent = artista.nombre;
+
+                const cantidad = document.createElement("p");
+                cantidad.className = "cantidad-canciones";
+                cantidad.textContent =
+                    artista.canciones.length + " canciones";
+
+                const listaCanciones = document.createElement("ul");
+                listaCanciones.className = "lista-canciones";
+
+                artista.canciones.forEach((cancion) => {
+                    const elemento = document.createElement("li");
+                    const enlace = document.createElement("a");
+
+                    enlace.className = "enlace-cancion";
+                    enlace.href = enlaceYouTube(
+                        artista.nombre,
+                        cancion
+                    );
+                    enlace.target = "_blank";
+                    enlace.rel = "noopener noreferrer";
+
+                    const icono = document.createElement("span");
+                    icono.className = "play-icon";
+                    icono.setAttribute("aria-hidden", "true");
+                    icono.textContent = "▶️";
+
+                    const texto = document.createElement("span");
+                    texto.textContent = cancion;
+
+                    enlace.append(icono, texto);
+                    elemento.appendChild(enlace);
+                    listaCanciones.appendChild(elemento);
+                });
+
+                const boton = document.createElement("button");
+                boton.type = "button";
+                boton.className = "btn-ver-mas";
+                boton.textContent = "Mostrar todas las canciones";
+                boton.setAttribute("aria-expanded", "false");
+
+                let expandida = false;
+
+                function actualizarLista() {
+                    const elementos = listaCanciones.children;
+
+                    Array.from(elementos).forEach((elemento, i) => {
+                        elemento.hidden = !expandida && i >= 4;
+                    });
+
+                    boton.textContent = expandida
+                        ? "Mostrar menos"
+                        : "Mostrar todas las canciones";
+
+                    boton.setAttribute(
+                        "aria-expanded",
+                        String(expandida)
+                    );
+                }
+
+                boton.addEventListener("click", () => {
+                    expandida = !expandida;
+                    actualizarLista();
+                });
+
+                actualizarLista();
+
+                cuerpo.append(
+                    titulo,
+                    cantidad,
+                    listaCanciones,
+                    boton
+                );
+
+                tarjeta.append(imagen, cuerpo);
+                columna.appendChild(tarjeta);
+                contenedor.appendChild(columna);
+            });
+
+            sinResultados.hidden = lista.length !== 0;
+        }
+
+        /* ===== BUSCAR POR ARTISTA O CANCIÓN ===== */
+        document.getElementById("buscarArtista")
+            .addEventListener("input", function () {
+                const consulta = this.value
+                    .trim()
+                    .toLocaleLowerCase("es");
+
+                const filtrados = artistas.filter((artista) => {
+                    const coincideArtista = artista.nombre
+                        .toLocaleLowerCase("es")
+                        .includes(consulta);
+
+                    const coincideCancion = artista.canciones.some(
+                        cancion => cancion
+                            .toLocaleLowerCase("es")
+                            .includes(consulta)
+                    );
+
+                    return coincideArtista || coincideCancion;
+                });
+
+                crearTarjetas(filtrados);
+            });
+
+        /* ===== CANCIONES FAVORITAS DESTACADAS ===== */
+        const favoritas = [
+            {
+                artista: "Edición Especial",
+                cancion: "Buena suerte"
+            },
+            {
+                artista: "Marca MP",
+                cancion: "Recuerda"
+            },
+            {
+                artista: "Vagón Chicano",
+                cancion: "Yo sí me enamoré"
+            },
+            {
+                artista: "Alfredito Olivas",
+                cancion: "En definitiva"
+            },
+            {
+                artista: "Efecto Elegante",
+                cancion: "Préstame tu corazón"
+            },
+            {
+                artista: "Los Canelos Jr's",
+                cancion: "Labios rojos"
+            }
+        ];
+
+        const listaFavoritas = document.getElementById(
+            "listaFavoritas"
+        );
+
+        favoritas.forEach((favorita) => {
+            const columna = document.createElement("div");
+            columna.className = "col-12 col-md-6 col-lg-4";
+
+            const tarjeta = document.createElement("article");
+            tarjeta.className = "favorita-item";
+
+            const titulo = document.createElement("h3");
+            titulo.textContent = "♫ " + favorita.cancion;
+
+            const artista = document.createElement("p");
+            artista.textContent = favorita.artista;
+
+            const enlace = document.createElement("a");
+            enlace.className = "btn-outline-red";
+            enlace.href = enlaceYouTube(
+                favorita.artista,
+                favorita.cancion
+            );
+            enlace.target = "_blank";
+            enlace.rel = "noopener noreferrer";
+            enlace.textContent = "Buscar en YouTube ↗️";
+
+            tarjeta.append(titulo, artista, enlace);
+            columna.appendChild(tarjeta);
+            listaFavoritas.appendChild(columna);
+        });
+
+        /* ===== MOSTRAR TODAS LAS TARJETAS AL INICIAR ===== */
+        crearTarjetas(artistas);
+    </script>
+</body>
+</html>e="viewport" content="width=device-width, ie="description" content="Mi playlist favorita: artistas, canciones y música regioaylist Favoritas | Mi Portafolio f="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bo=== DISEÑO -rojo---griscroll-bcroll-paackgrounoloront-family: Arial, Helvetolext-transargolor: vaarg=== BARRA DE NAVackground: rgba(12order-bottom: 2px soolor: var(--blaettolaar ar .olackgrou=== ilig          rgba       rgba(       rg   url("https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=croackground-packgroaaddiisplaackgrouaoroettont-size: clamp(3iackgrouorder: 1px sooadackground: varorder-color: varransform: torder: ada=== TARJETAS BOackgrouorder: 1pordransition: transform 0.3s, boetaransform: torder-colebeta-musieta-musicoisplaackaordarg=== Aackgrouorder-left: 4px soorargoargorder-bottom: 1pa-cancionesorda-cancioolo=== Backorder:adadoackorder-colox-shadow: 0 0 0 0.2rem rgba(2=== Cackground: linear-gradient(135deg, #2order: 1pordackgroundorder: 1p-controackgroundorder-colox-shadow: 0 0 0 0.2rem rgba(2ack=== PIE DEackorder-top: 2px soex=== CELULARES Y Ta (max   mi   tarje  a (prefers-reduced-m   scroll   transition: = NAVEs="navbar navbar-expand-lg navbar-dcla class="navbar-brand"   ♫ PLAYLIST <span>button class="navbar-toggle       data-bs-t       data-bs-target=       aria-controls       aria-       aria-label="Abrir   <span class="navbar-toggldiv class="collapse navbar-collapse" id=   <ul class="navb       <li c           <a class="nav-link" href="#in       <li c           <a class="nav-link" href="#artist       <li c           <a class="nav-link" href="#canciones">Cancion       <li c           <a class="nav-link" href="#contac= Plass="hecldiv class="   <span class="hero-etiqueta">MI PORTAFOLIO   <h            <span class="texto-rojo">MIS F       Un espacio dedicado a mis artistas f       canciones que forman parte de mi play       regional mexicana, norteña    <a href="#artistas" class="btn          <a href="#canciones" class="btn btn-contorn    = ARTISTAS: TRES TAclp class="texto-rojo fw-bold">ARTISTASh2 class="titulo-seccion">Mis artistasp cl   Tres tarjetas principales con imágene   enlaces a las canciones organizadasdiv c   <!   <div c       <article class="card t               src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=               clas               alt="Artista interpretando música                           <div cl               <span class="etiqueta-roja">REGIONAL               <h3 class="card-title">Los Alegres de               <p cl                   Un espacio para descubr                   que seleccionast                   <a href="#alegres" class                        <!   <div c       <article class="card t               src="https://images.unsplash.com/photo-1501612780327-45045538702b?auto=format&fit=               clas               alt="Escenario con instrumentos y luc                          <div cl               <span class="etiqueta-roja">MÚSICA               <h3 class="card-title">Los C               <p cl                   Encuentra los títu                   para tu co                   <a href="#canelos" class                        <!   <div c       <article class="card t               src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=               clas               alt="Concierto musical con esce                          <div cl               <span class="etiqueta-roja               <h3 class="card-title">Los Tucanes                <p cl                   Una selección de l                   agregast                   <a href="#tucanes" class                     p class="text-second   Nota: las imágenes son ilustrativas de músi   no retratos oficiales = CANCIONES FAVid="canciones" cclp class="texto-rojo fw-bold">h2 class="titulo-seccion">Cancionesp cl   Busca por nombre de artista o tílabel for="busqueda" cla   Busca   class="form-contro   placeholder="Escribe el nombre de una canci   aria-label="Buscar cancionp id="contador" class="resultado" aria-livdiv id=   <!-- LOS ALEGRES    <article class="artista-bloqu       <h3>Los Alegres d       <ul class="l           <li>La muerte d           <li>El            <li>El            <li>Te mega amo, F           <li>El d           <li>El doble R que propones en es           <li>Edici           <li>Si           <li>Sin            <li>B           <li>E           <li           <li>           <l           <li>I           <li   <!-- LOS   <article class="artista-bloqu       <h3>Los        <ul class="l           <li>Colecciona           <li>Casi siempre estoy pen           <li>Com           <li>Cómo te            <li>Ojitos           <li>Com           <li>L      <article class="artista-bloqu       <h3>Los Tucanes       <ul class="l           <l           <li           <li>El ág           <li>So           <li>Mis            <li>A           <li>T           <l           <li>Fiesta e   <   <article class="       <       <ul class="l           <li>           <li>Qué fue            <           <li>Ya            <li>   <!-- HERENCI   <article class="       <h3>Herencia       <ul class="l           <           <li>           <li>Y           <li>           <li>Cómo du           <li           <li>I           <li>Am           <li>Quiéreme com   <!-- EFE   <article class="       <h3>Efec       <ul class="l           <li>Nadi           <l           <li>Préstame           <li>Eb           <li>Q   <!-- PL   <article class="       <h3>Pla       <ul class="l           <li>M           <li           <li>Sin           <li>Te v           <li>Sedó   <!-- A   <article class="       <h3>Ar       <ul class="l           <           <li>M           <li>Que se cans           <li>Por qué t           <li>Por           <           <   <!-- V   <article class="       <h3>Va       <ul class="l           <li>Clavad           <l           <li>Yo sí           <l           <li>Vie           <li>Si    <!-- MARC   <article class="       <h3>Marca       <ul class="l           <li>Er           <           <li>El                   <li   <!-- ALFR   <article class="       <h3>Alfre       <ul class="l           <li>Con           <li>En           <li>El precio de           <li>T           <li>Y   <!-- F   <article class="       <h3>Fu       <ul class="l           <                      <li>           <li>           <                      <li>Tu = COcldiv class=   <p class="texto-rojo fw-bold">HABLEM   <h2 class="titulo-seccion   <p class="t       ¿Qué artista o canción agregarías        Comparte tu sugerencia e   <form id="form       <div c           <div c               <label for="nombre" cla                                                       clas                                 placeholder="Es                         <div c               <label for="artistaSugerido" cla                                                                 clas                   id="                   placeholder="Nom                         <div               <label for="cancionSugerida" cla                   Canción                                              clas                   id="                   placeholder="Nombr                         <div               <label for="mensaje" cla                                                clas                                             placeholder="Escribe un comentario opcio             <div               <button type="submit" class                   Pre             <div id="resp            aria-live= PIE DE cl   <strong>♫ Playlist Fa   Portafolio musical académico · Diseño en HTML,STRArc="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.miADOR  busqueda = document.getElementB bloques = document.querySelectorAll(".a contador = document.getElementByion filtonst texto    .toLocaleLeloques.forEach(fu   const coincide = bl       .toLocal       .i   bloque.hidd    ontador.textConten   ? "Artistas en tu lis   : "Coincidencias encontradaeda.addEventListener("input", fi formulario = document.getElementById("formu respuesta = document.getElementById("respueslario.addEventListener("submit", fuvento.pronst nombre = document.getElementById("nombreonst artista = document.getElementById("artistaSugeridoonst cancion = document.getElementById("cancionSugeridaonst mensaje = document.getElementById("mensaje"f (!nombre || !artist   respuesta.textContent = "Completa los campos   "SUGERENCIA PARA PLAY   "Nom   "Artis   "Canci   "Comentario: " + (mensaje || "espuesta.reponst aviso = document.creviso.classNamevi   "Tu sugerencia está preparada. Puedes copiarla para guardarla; este formulario no envía informacióonst botonCopiar = document.createElotonCopiar.otonCopiar.className = "btn btnotonCopiar.textContent = "CopiotonCopiar.addEventListener("click", as       await navigator.clipboard.wri       botonCopiar.textContent = "Suge   }       const area = document.createElem       area.       area.setAttribute(       respuesta.ap            avi           "No se pudo copiar automáticamente. Selecciona y copia el tespuesta.appespuesta.appendChi
